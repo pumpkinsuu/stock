@@ -1,4 +1,6 @@
 from flask import Blueprint, request, jsonify
+import numpy as np
+
 from utilities import get_data, preprocess
 
 
@@ -26,6 +28,10 @@ def create_route(models: list):
 
         result = models[model].predict(X)
         result = scaler.inverse_transform(result)
+        result = result.reshape(-1)
+        empty = [None] * models[model].n_days
+        result = np.concatenate((empty, result))
+
         tomorrow = result[-1]
 
         df = df.assign(Predict=result[:-1])
