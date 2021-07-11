@@ -9,6 +9,7 @@ class Xgb:
 
         self.path = path
         self.features = features
+        self.n_days = n_days
 
         self.model = xgb.Booster()
         if os.path.isfile(path):

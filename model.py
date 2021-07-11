@@ -4,17 +4,17 @@ from lstm import Lstm
 from utilities import get_data, preprocess
 
 
-def load():
+def load(n_days=60):
     if not os.path.isdir('save_model'):
         os.makedirs('save_model')
 
     files = os.listdir('save_model')
 
     models = [
-        Lstm('save_model/lstm_close.h5', ['close']),
-        # Lstm('save_model/lstm_close_poc.h5', ['close', 'poc']),
-        # Lstm('save_model/lstm_close_rsi.h5', ['close', 'rsi']),
-        # Lstm('save_model/lstm_close_poc_rsi.h5', ['close', 'poc', 'rsi'])
+        Lstm('save_model/lstm_close.h5', ['close'], n_days),
+        # Lstm('save_model/lstm_close_poc.h5', ['close', 'poc'], n_days),
+        # Lstm('save_model/lstm_close_rsi.h5', ['close', 'rsi'], n_days),
+        # Lstm('save_model/lstm_close_poc_rsi.h5', ['close', 'poc', 'rsi'], n_days)
     ]
 
     stocks = ['aapl']
@@ -25,10 +25,7 @@ def load():
             if model.path.split('/')[-1] in files:
                 continue
 
-            features = model.features
-            _, X, Y = preprocess(df, features)
-            print(X.shape)
-            print(model.model.input_shape)
+            _, X, Y = preprocess(df, model.features, model.n_days)
             model.fit(X[:-1], Y)
 
     return models
