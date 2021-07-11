@@ -10,22 +10,22 @@ def load(n_days=60):
 
     files = os.listdir('save_model')
 
-    models = [
-        Lstm('save_model/lstm_close.h5', ['close'], n_days),
-        # Lstm('save_model/lstm_close_poc.h5', ['close', 'poc'], n_days),
-        # Lstm('save_model/lstm_close_rsi.h5', ['close', 'rsi'], n_days),
-        # Lstm('save_model/lstm_close_poc_rsi.h5', ['close', 'poc', 'rsi'], n_days)
-    ]
+    models = {
+        'lstm_close': Lstm('save_model/lstm_close.h5', ['close'], n_days),
+        # 'lstm_close_poc': Lstm('save_model/lstm_close_poc.h5', ['close', 'poc'], n_days),
+        # 'lstm_close_rsi': Lstm('save_model/lstm_close_rsi.h5', ['close', 'rsi'], n_days),
+        # 'lstm_close_poc_rsi': Lstm('save_model/lstm_close_poc_rsi.h5', ['close', 'poc', 'rsi'], n_days)
+    }
 
     stocks = ['aapl']
 
     for stock in stocks:
         df = get_data(stock, start='2010-01-01', end='2021-01-01')
         for model in models:
-            if model.path.split('/')[-1] in files:
+            if models[model].path.split('/')[-1] in files:
                 continue
 
-            _, X, Y = preprocess(df, model.features, model.n_days)
-            model.fit(X[:-1], Y)
+            _, X, Y = preprocess(df, models[model].features, models[model].n_days)
+            models[model].fit(X[:-1], Y)
 
     return models
