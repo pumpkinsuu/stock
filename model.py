@@ -27,5 +27,6 @@ def load(n_days=60):
 
             _, X, Y = preprocess(df, models[model].features, models[model].n_days)
             models[model].fit(X[:-1], Y)
+            models[model].predict(X[:models[model].n_days])
 
     return models
