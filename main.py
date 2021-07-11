@@ -11,7 +11,7 @@ CORS(app)
 
 @app.errorhandler(ErrorAPI)
 def exception(e: ErrorAPI):
-    return jsonify(e.detail()), 500
+    return jsonify(e.detail()), 200
 
 
 @app.errorhandler(Exception)
