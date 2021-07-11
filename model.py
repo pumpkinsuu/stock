@@ -27,6 +27,8 @@ def load():
 
             features = model.features
             _, X, Y = preprocess(df, features)
+            print(X.shape)
+            print(model.model.input_shape)
             model.fit(X[:-1], Y)
 
     return models
