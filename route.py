@@ -11,20 +11,18 @@ def create_route(models: list):
         # String
         stock = data['stock']
         # String
-        model = data['save_model']
-        # List
-        features = data['features']
-        # Int
-        n_days = data['n_days']
+        model = data['model']
         # Start date
         start = data['start']
         # End date
         end = data['end']
-        # Frequency
-        freq = data['freq']
 
-        df = get_data(stock=stock, freq=freq, start=start, end=end)
-        scaler, X, _ = preprocess(df, features, n_days)
+        df = get_data(stock=stock, start=start, end=end)
+        scaler, X, _ = preprocess(
+            df,
+            models[model].features,
+            models[model].n_days
+        )
 
         result = models[model].predict(X)
         result = scaler.inverse_transform(result)
