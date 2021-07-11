@@ -1,0 +1,32 @@
+import os
+
+from lstm import Lstm
+from utilities import get_data, preprocess
+
+
+def load():
+    if not os.path.isdir('save_model'):
+        os.makedirs('save_model')
+
+    files = os.listdir('save_model')
+
+    models = [
+        Lstm('save_model/lstm_close.h5', ['Close']),
+        # Lstm('save_model/lstm_close_poc.h5', ['Close', 'PoC']),
+        # Lstm('save_model/lstm_close_rsi.h5', ['Close', 'RSI']),
+        # Lstm('save_model/lstm_close_poc_rsi.h5', ['Close', 'PoC', 'RSI'])
+    ]
+
+    stocks = ['aapl']
+
+    for stock in stocks:
+        df = get_data(stock, start='2010-01-01', end='2021-01-01')
+        for model in models:
+            if model.path.split('/')[-1] in files:
+                continue
+
+            features = model.features
+            _, X, Y = preprocess(df, features)
+            model.fit(X, Y)
+
+    return models
