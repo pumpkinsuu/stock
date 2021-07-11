@@ -32,7 +32,7 @@ def get_data(
         'format': 'csv',
         'sort': 'date',
         'token': TOKEN,
-        'columns': COLUMNS
+        'columns[]': COLUMNS
     }
     if start:
         params['startDate'] = start
