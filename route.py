@@ -34,7 +34,7 @@ def create_route(models: list):
 
         tomorrow = result[-1]
 
-        df = df.assign(Predict=result[:-1])
+        df = df.assign(predict=result[:-1])
         df['predict'] = df['predict'].astype(float)
         df = df.dropna()
 
