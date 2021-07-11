@@ -7,15 +7,15 @@ def create_route(models: list):
 
     @bp.route('/predict')
     def predict():
-        data = request.json
+        data = request.args
         # String
-        stock = data['stock']
+        stock = data.get('stock')
         # String
-        model = data['model']
+        model = data.get('model')
         # Start date
-        start = data['start']
+        start = data.get('start')
         # End date
-        end = data['end']
+        end = data.get('end')
 
         df = get_data(stock=stock, start=start, end=end)
         scaler, X, _ = preprocess(
