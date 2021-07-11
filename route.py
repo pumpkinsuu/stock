@@ -38,3 +38,5 @@ def create_route(models: list):
             'csv': df.to_csv(),
             'tomorrow': tomorrow
         })
+
+    return bp
