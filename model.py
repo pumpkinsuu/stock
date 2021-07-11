@@ -27,6 +27,6 @@ def load():
 
             features = model.features
             _, X, Y = preprocess(df, features)
-            model.fit(X, Y)
+            model.fit(X[:-1], Y)
 
     return models
