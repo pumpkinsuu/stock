@@ -58,6 +58,8 @@ def get_data(
     r = requests.get(url, params=params)
     if r.status_code != 200:
         raise ErrorAPI(500, 'Failed to get data!')
+    if 'Error' in r.text:
+        raise ErrorAPI(400, r.text)
 
     csv = r.content.decode('utf-8')
     return pd.read_csv(StringIO(csv))
