@@ -19,6 +19,9 @@ def create_route(models: list):
         # End date
         end = data.get('end')
 
+        if model not in models:
+            raise Exception('Model not exist!')
+
         df = get_data(stock=stock, start=start, end=end)
         scaler, X, _ = preprocess(
             df,
