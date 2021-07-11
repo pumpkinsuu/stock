@@ -14,7 +14,6 @@ class Lstm:
 
         if os.path.isfile(path):
             self.model = load_model(path)
-            self.model._make_predict_function()
         else:
             self.model = Sequential()
             self.model.add(LSTM(50, input_shape=(1, len(features)*n_days), return_sequences=True))
@@ -25,7 +24,6 @@ class Lstm:
 
     def fit(self, X, Y, epochs=10):
         self.model.fit(X, Y, epochs=epochs, verbose=1)
-        self.model._make_predict_function()
         self.model.save(self.path)
 
     def predict(self, X):

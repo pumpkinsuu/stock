@@ -22,11 +22,11 @@ def load(n_days=60):
     for stock in stocks:
         df = get_data(stock, start='2010-01-01', end='2021-01-01')
         for model in models:
-            if models[model].path.split('/')[-1] in files:
-                continue
-
             _, X, Y = preprocess(df, models[model].features, models[model].n_days)
-            models[model].fit(X[:-1], Y)
 
+            if not models[model].path.split('/')[-1] in files:
+                models[model].fit(X[:-1], Y)
+
+            models[model].predict(X[:models[model].n_days])
 
     return models
