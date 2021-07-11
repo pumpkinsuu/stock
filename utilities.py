@@ -57,12 +57,15 @@ def get_data(
 
     r = requests.get(url, params=params)
     if r.status_code != 200:
-        raise ErrorAPI(500, 'Failed to get data!')
+        raise ErrorAPI(r.status_code, 'Failed to request data!')
     if 'Error' in r.text:
         raise ErrorAPI(400, r.text)
 
     csv = r.content.decode('utf-8')
-    return pd.read_csv(StringIO(csv))
+    df = pd.read_csv(StringIO(csv))
+    if len(df) < 1:
+        raise ErrorAPI(400, 'Failed to get data!')
+    return df
 
 
 # features=['Close','PoC','RSI']
