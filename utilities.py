@@ -53,13 +53,13 @@ def get_data(
 # features=['Close','PoC','RSI']
 def preprocess(df, features=None, n_days=60):
     if features is None:
-        features = ['Close']
+        features = ['close']
 
-    data = df[['Close']]
-    if 'PoC' in features:
+    data = df[['close']]
+    if 'poc' in features:
         data = data.assign(PoC=data.pct_change())
-    if 'RSI' in features:
-        delta = data['Close'].diff()
+    if 'rsi' in features:
+        delta = data['poc'].diff()
         up = delta.clip(lower=0)
         down = -1 * delta.clip(upper=0)
         ema_up = up.ewm(com=13, adjust=False).mean()
@@ -71,7 +71,7 @@ def preprocess(df, features=None, n_days=60):
     data = data.dropna()
 
     # Transform
-    Y = data[n_days:][['Close']].to_numpy()
+    Y = data[n_days:][['close']].to_numpy()
     data = data[features].to_numpy()
 
     n = len(data) - n_days + 1

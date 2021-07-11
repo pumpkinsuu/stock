@@ -11,10 +11,10 @@ def load():
     files = os.listdir('save_model')
 
     models = [
-        Lstm('save_model/lstm_close.h5', ['Close']),
-        # Lstm('save_model/lstm_close_poc.h5', ['Close', 'PoC']),
-        # Lstm('save_model/lstm_close_rsi.h5', ['Close', 'RSI']),
-        # Lstm('save_model/lstm_close_poc_rsi.h5', ['Close', 'PoC', 'RSI'])
+        Lstm('save_model/lstm_close.h5', ['close']),
+        # Lstm('save_model/lstm_close_poc.h5', ['close', 'poc']),
+        # Lstm('save_model/lstm_close_rsi.h5', ['close', 'rsi']),
+        # Lstm('save_model/lstm_close_poc_rsi.h5', ['close', 'poc', 'rsi'])
     ]
 
     stocks = ['aapl']

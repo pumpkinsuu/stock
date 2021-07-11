@@ -31,7 +31,7 @@ def create_route(models: list):
         tomorrow = result[-1]
 
         df = df.assign(Predict=result[:-1])
-        df['Predict'] = df['Predict'].astype(float)
+        df['predict'] = df['predict'].astype(float)
         df = df.dropna()
 
         return jsonify({
