@@ -5,6 +5,21 @@ from io import StringIO
 from sklearn.preprocessing import MinMaxScaler
 
 
+class ErrorAPI(Exception):
+    def __init__(self, code, message):
+        super().__init__()
+        self.code = code
+        self.message = message
+
+    def detail(self):
+        return {
+                'error': {
+                    'code': self.code,
+                    'message': self.message
+                }
+        }
+
+
 TOKEN = 'a7213dd9f3ba445a808a3310c5031dd5021adffd'
 COLUMNS = [
     'close',
@@ -42,7 +57,7 @@ def get_data(
 
     r = requests.get(url, params=params)
     if r.status_code != 200:
-        raise Exception('Something wrong!')
+        raise ErrorAPI(500, 'Failed to get data!')
 
     csv = r.content.decode('utf-8')
     return pd.read_csv(StringIO(csv))

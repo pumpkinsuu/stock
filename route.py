@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 import numpy as np
 
-from utilities import get_data, preprocess
+from utilities import get_data, preprocess, ErrorAPI
 
 
 def create_route(models: list):
@@ -20,7 +20,7 @@ def create_route(models: list):
         end = data.get('end')
 
         if model not in models:
-            raise Exception('Model not exist!')
+            raise ErrorAPI(400, 'Model not exist!')
 
         df = get_data(stock=stock, start=start, end=end)
         scaler, X, _ = preprocess(
